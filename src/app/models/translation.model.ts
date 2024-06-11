@@ -1,4 +1,4 @@
-export interface CountryName {
+export interface Translation {
     language: string;
     text: string;
 }

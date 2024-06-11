@@ -1,7 +1,8 @@
-import { CountryName } from "./country-name.model";
+import { Translation } from "./translation.model";
 
 export interface Country {
+    displayName: string;
     isoCode: string;
-    name: CountryName[];
+    name: Translation[];
     officialLanguages: string[];
 }
