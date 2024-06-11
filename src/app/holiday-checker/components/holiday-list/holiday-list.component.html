@@ -1,26 +1,27 @@
 @if (holidays.loading()) {
     <p>Loading</p>
-}
-@if (holidays.list().length) {
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (holiday of holidays.list(); track holiday.id) {
+} @else {
+    @if (holidays.list().length) {
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ holiday.displayName }}</td>
-                    <td>{{ holiday.startDate }}</td>
-                    <td>{{ holiday.endDate }}</td>
+                    <th>Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
-@if (holidays.error()) {
-    <p>{{ holidays.error() }}</p>
+            </thead>
+            <tbody>
+                @for (holiday of holidays.list(); track holiday.id) {
+                    <tr>
+                        <td>{{ holiday.displayName }}</td>
+                        <td>{{ holiday.startDate }}</td>
+                        <td>{{ holiday.endDate }}</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    @if (holidays.error()) {
+        <p>{{ holidays.error() }}</p>
+    }
 }

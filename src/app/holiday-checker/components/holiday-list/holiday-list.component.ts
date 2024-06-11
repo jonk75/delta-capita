@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { HolidayService, Holidays } from '../../../services/holiday.service';
 
 @Component({
@@ -6,7 +6,8 @@ import { HolidayService, Holidays } from '../../../services/holiday.service';
   standalone: true,
   imports: [],
   templateUrl: './holiday-list.component.html',
-  styleUrl: './holiday-list.component.scss'
+  styleUrl: './holiday-list.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 
 export class HolidayListComponent {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Countries, CountryService } from '../../../services/country.service';
 import { CommonModule } from '@angular/common';
 import { SubdivisionService } from '../../../services/subdivision.service';
@@ -12,7 +12,8 @@ import { Country } from '../../../models/country.model';
     CommonModule
   ],
   templateUrl: './holiday-country-selector.component.html',
-  styleUrl: './holiday-country-selector.component.scss'
+  styleUrl: './holiday-country-selector.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 
 export class HolidayCountrySelectorComponent implements OnInit {

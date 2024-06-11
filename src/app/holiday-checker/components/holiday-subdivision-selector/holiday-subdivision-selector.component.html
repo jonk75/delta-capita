@@ -1,14 +1,15 @@
 @if (subdivisions.loading()) {
     <p>Loading</p>
-}
-@if (subdivisions.list().length) {
-    <select (change)="setSubdivision($event)">
-        <option>Select subdivision</option>
-        @for (subvivision of subdivisions.list(); track subvivision.shortName) {
-            <option [value]="subvivision.code">{{ subvivision.displayName }}</option>
-        }
-    </select>
-}
-@if (subdivisions.error()) {
-    <p>{{ subdivisions.error() }}</p>
+} @else {
+    @if (subdivisions.list().length) {
+        <select (change)="setSubdivision($event)">
+            <option>Select subdivision</option>
+            @for (subvivision of subdivisions.list(); track subvivision.shortName) {
+                <option [value]="subvivision.code">{{ subvivision.displayName }}</option>
+            }
+        </select>
+    }
+    @if (subdivisions.error()) {
+        <p>{{ subdivisions.error() }}</p>
+    }
 }

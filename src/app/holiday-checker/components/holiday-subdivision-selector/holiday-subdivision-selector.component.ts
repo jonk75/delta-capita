@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SubdivisionService, Subdivisions } from '../../../services/subdivision.service';
 import { CommonModule } from '@angular/common';
 
@@ -7,7 +7,8 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './holiday-subdivision-selector.component.html',
-  styleUrl: './holiday-subdivision-selector.component.scss'
+  styleUrl: './holiday-subdivision-selector.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 
 export class HolidaySubdivisionSelectorComponent {
