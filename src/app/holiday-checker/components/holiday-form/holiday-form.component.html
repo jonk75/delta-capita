@@ -1,0 +1,37 @@
+<form [formGroup]="formGroup">
+    @if (countries.loading()) {
+        <p>Loading</p>
+    } @else {
+        <div class="form-group">
+            @if (countries.list().length) {
+                <div class="form-control form-required">
+                    <label for="countryIsoCode">Country</label>
+                    <select formControlName="countryIsoCode" id="countryIsoCode" (change)="setCountry($event)">
+                        <option value="">Select country</option>
+                        @for (country of countries.list(); track country.isoCode) {
+                            <option [value]="country.isoCode">{{ country.displayName }}</option>
+                        }
+                    </select>
+                </div>
+            }
+            <app-error [errors]="countries.errors() || formGroup.controls['countryIsoCode'].errors"></app-error>
+        </div>
+    }
+    @if (subdivisions.loading()) {
+        <p>Loading</p>
+    } @else {
+        @if (subdivisions.list().length) {
+            <div class="form-control form-required">
+                <label for="subdivision">Subdivision</label>
+                <select formControlName="subdivision" id="subdivision">
+                    <option value="">Select subdivision</option>
+                    @for (subvivision of subdivisions.list(); track subvivision.shortName) {
+                        <option [value]="subvivision.code">{{ subvivision.displayName }}</option>
+                    }
+                </select>
+            </div>
+        }
+        <app-error [errors]="subdivisions.errors() || formGroup.controls['subdivision'].errors"></app-error>
+    }
+    <button type="button" class="cc-button" (click)="submit()" [disabled]="formGroup.invalid">Retrieve Holidays</button>
+</form>

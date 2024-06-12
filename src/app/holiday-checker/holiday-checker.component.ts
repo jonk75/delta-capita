@@ -1,19 +1,15 @@
 import { Component } from '@angular/core';
-import { HolidayCountrySelectorComponent } from './components/holiday-country-selector/holiday-country-selector.component';
-import { HolidaySubdivisionSelectorComponent } from './components/holiday-subdivision-selector/holiday-subdivision-selector.component';
 import { HolidayListComponent } from './components/holiday-list/holiday-list.component';
-import { HolidaySelectorsComponent } from './components/holiday-selectors/holiday-selectors.component';
+import { HolidayFormComponent } from './components/holiday-form/holiday-form.component';
 
 @Component({
   selector: 'app-holiday-checker',
   standalone: true,
   imports: [
-    HolidaySelectorsComponent,
+    HolidayFormComponent,
     HolidayListComponent
   ],
-  templateUrl: './holiday-checker.component.html',
-  styleUrl: './holiday-checker.component.scss'
+  templateUrl: './holiday-checker.component.html'
 })
 
-export class HolidayCheckerComponent {
-}
+export class HolidayCheckerComponent {}

@@ -8,6 +8,6 @@ export interface Holiday {
     name: Translation[];
     nationwide: boolean;
     startDate: string;
-    subdivisions: Subdivide[];
+    subdivisions?: Subdivide[];
     type: string;
 }

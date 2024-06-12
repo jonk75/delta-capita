@@ -1,0 +1,13 @@
+@import '../../../styles/config';
+.masthead {
+    background: $mono;
+    padding: 20px;
+    position: sticky;
+    text-align: center;
+    top: 0;
+}
+
+.site-name {
+    margin: 0;
+    padding: 0;
+}

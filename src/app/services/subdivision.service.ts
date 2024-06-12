@@ -4,10 +4,10 @@ import { Observable, lastValueFrom } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Subdivision } from '../models/subdivision.model';
 import { TranslationService } from './translation.service';
-import { Country } from '../models/country.model';
+import { ErrorService } from './error.service';
 
 export interface Subdivisions {
-  error: Signal<string>;
+  errors: Signal<string[]>;
   list: Signal<Subdivision[]>;
   loading: Signal<boolean>;
 }
@@ -21,22 +21,22 @@ export class SubdivisionService {
   private _list: Subdivision[] = [];
   private readonly list: WritableSignal<Subdivision[]> = signal<Subdivision[]>(this._list);
   private readonly loading: WritableSignal<boolean> = signal<boolean>(false);
-  private readonly error: WritableSignal<string> = signal<string>('');
+  private readonly errors: WritableSignal<string[]> = signal<string[]>([]);
   public readonly subvivisions: Subdivisions = {
-    error: this.error.asReadonly(),
+    errors: this.errors.asReadonly(),
     list: this.list.asReadonly(),
     loading: this.loading.asReadonly()
   };
 
   constructor(
+    private readonly errorService: ErrorService,
     private readonly http: HttpClient,
     private readonly translationService: TranslationService
   ) { }
 
   public async getSubdivisions(
-    country: Country
-  ) {
-    const countryIsoCode: string = country.isoCode;
+    countryIsoCode: string
+  ): Promise<void> {
     if (!countryIsoCode) {
       this.list.set([]);
       return;
@@ -47,7 +47,7 @@ export class SubdivisionService {
       return;
     }
     this.loading.set(true);
-    this.error.set('');
+    this.errors.set([]);
     const source: Observable<Subdivision[]> = this.http.get<Subdivision[]>(this.api, {
       params: {
         countryIsoCode
@@ -70,20 +70,21 @@ export class SubdivisionService {
 
   private handleError(
     error: HttpErrorResponse
-  ) {
-    this.error.set(error.error);
+  ): void {
+    const errors: string[] = this.errorService.handleError(error);
+    this.errors.set(errors);
   }
 
   private handleSuccess(
     countryIsoCode: string,
     response: Subdivision[]
-  ) {
+  ): void {
     this._lists[countryIsoCode] = response;
     this._list = response;
     this.setDisplayName();
   }
 
-  private setDisplayName() {
+  private setDisplayName(): void {
     this._list.forEach((subdivision: Subdivision) => {
       subdivision.displayName = this.translationService.getDisplayName(subdivision.name);
     });

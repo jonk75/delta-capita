@@ -1,0 +1,35 @@
+@import '../../../../styles/config';
+form {
+    display: block;
+    margin-bottom: 10px;
+}
+
+select,
+button {
+    border-radius: 5px;
+    display: block;
+    font-family: inherit;
+    font-size: $bodySize;
+    padding: 5px;
+    width: 100%;
+}
+
+select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: $background;
+    background-image: linear-gradient(45deg, transparent 50%, $mono 50%), linear-gradient(135deg, $mono 50%, transparent 50%);
+    background-position: calc(100% - 20px) calc(1em - 3px), calc(100% - 15px) calc(1em - 3px), calc(100% - 2.5em) 0.5em;
+    background-repeat: no-repeat;
+    background-size: 5px 5px, 5px 5px, 1px 1.5em;
+    border: 2px solid rgba($bodyColor, 0.25);
+    margin-bottom: 10px;
+    outline: none;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}

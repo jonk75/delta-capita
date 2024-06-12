@@ -3,12 +3,14 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { lastValueFrom } from 'rxjs';
-import { Country } from '../models/country.model';
 import { Holiday } from '../models/holiday.model';
 import { TranslationService } from './translation.service';
+import { ErrorService } from './error.service';
+import { Subdivide, Subdivision } from '../models/subdivision.model';
+import { LanguageService } from './language.service';
 
 export interface Holidays {
-  error: Signal<string>;
+  errors: Signal<string[]>;
   list: Signal<Holiday[]>;
   loading: Signal<boolean>;
 }
@@ -19,32 +21,45 @@ export interface Holidays {
 
 export class HolidayService {
   private api: string = `${environment.api}/PublicHolidays`;
+  private _countryIsoCode: string = '';
+  private _validFrom: string = '';
+  private _validTo: string = '';
+  private _subdivision: string = '';
   private _list: Holiday[] = [];
   private readonly list: WritableSignal<Holiday[]> = signal<Holiday[]>(this._list);
   private readonly loading: WritableSignal<boolean> = signal<boolean>(false);
-  private readonly error: WritableSignal<string> = signal<string>('');
+  private readonly errors: WritableSignal<string[]> = signal<string[]>([]);
   public readonly holidays: Holidays = {
-    error: this.error.asReadonly(),
+    errors: this.errors.asReadonly(),
     list: this.list.asReadonly(),
     loading: this.loading.asReadonly()
   };
 
   constructor(
+    private readonly errorService: ErrorService,
     private readonly http: HttpClient,
+    private languageService: LanguageService,
     private readonly translationService: TranslationService
   ) { }
 
   // PUBLIC METHODS
 
   public async getHolidays(
-    country: Country,
-    validFrom: string = '2022-01-01',
-    validTo: string = '2022-06-30',
-    languageIsoCode: string = 'EN'
-  ) {
+    countryIsoCode: string,
+    validFrom: string,
+    validTo: string,
+    subdivision?: string
+  ): Promise<void> {
+    if (this._countryIsoCode === countryIsoCode && this._validFrom === validFrom && this._validTo === validTo) {
+      if (this._subdivision === subdivision) {
+        return;
+      } else {
+        this.filterHolidays(subdivision);
+      }
+    }
     this.loading.set(true);
-    this.error.set('');
-    const countryIsoCode: string = country.isoCode;
+    this.errors.set([]);
+    const languageIsoCode: string = this.languageService.language;
     const source: Observable<Holiday[]> = this.http.get<Holiday[]>(this.api, {
       params: {
         countryIsoCode,
@@ -55,7 +70,10 @@ export class HolidayService {
     });
     await lastValueFrom(source)
       .then(
-        (response: Holiday[]) => this.handleSuccess(response)
+        (response: Holiday[]) => this.handleSuccess(
+          response,
+          subdivision
+        )
       )
       .catch(
         (error: HttpErrorResponse) => this.handleError(error)
@@ -65,24 +83,44 @@ export class HolidayService {
 
   // PRIVATE METHODS
 
+  private filterHolidays(
+    subdivision?: string
+  ): void {
+    if (!subdivision) {
+      this._subdivision = '';
+      this.list.set(this._list);
+      return;
+    }
+    const filtered: Holiday[] = this._list.map(holiday => (
+      {
+        ...holiday,
+        subdivisions: holiday.subdivisions ? holiday.subdivisions?.filter(item => item.code === subdivision) : []
+      }
+    )).filter(holiday => holiday.subdivisions.length > 0 || holiday.nationwide);
+    this._subdivision = subdivision;
+    this.list.set(filtered);
+  }
+
   private handleError(
     error: HttpErrorResponse
-  ) {
-    this.error.set(error.error);
+  ): void {
+    const errors: string[] = this.errorService.handleError(error);
+    this.errors.set(errors);
   }
 
   private handleSuccess(
-    response: Holiday[]
-  ) {
+    response: Holiday[],
+    subdivision?: string
+  ): void {
     this._list = response;
     this.setDisplayName();
+    this.filterHolidays(subdivision);
   }
 
-  private setDisplayName() {
+  private setDisplayName(): void {
     this._list.forEach((holiday: Holiday) => {
       holiday.displayName = this.translationService.getDisplayName(holiday.name);
     });
-    this.list.set(this._list);
   }
 
 }

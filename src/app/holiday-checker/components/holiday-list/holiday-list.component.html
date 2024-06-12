@@ -1,6 +1,7 @@
 @if (holidays.loading()) {
     <p>Loading</p>
 } @else {
+    <app-error [errors]="holidays.errors()"></app-error>
     @if (holidays.list().length) {
         <table>
             <thead>
@@ -20,8 +21,5 @@
                 }
             </tbody>
         </table>
-    }
-    @if (holidays.error()) {
-        <p>{{ holidays.error() }}</p>
     }
 }

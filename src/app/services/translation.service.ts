@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Translation } from '../models/translation.model';
+import { LanguageService } from './language.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class TranslationService {
-  private language: string = 'EN';
+
+  constructor(
+    private readonly languageService: LanguageService
+  ) {}
   
   /**
    * Gets the display name for an item from language array options
@@ -17,7 +21,8 @@ export class TranslationService {
   getDisplayName(
     items: Translation[]
   ): string {
-    const item: Translation | undefined = items.find((name) => name.language === this.language);
+    const language: string = this.languageService.language;
+    const item: Translation | undefined = items.find((name) => name.language === language);
     if (item) {
       return item.text;
     }
