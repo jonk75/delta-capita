@@ -61,7 +61,7 @@ export class HolidayService {
     }
     this.loading.set(true);
     this.errors.set([]);
-    const languageIsoCode: string = this.languageService.language;
+    const languageIsoCode: string = environment.lang;
     const source: Observable<Holiday[]> = this.http.get<Holiday[]>(this.api, {
       params: {
         countryIsoCode,

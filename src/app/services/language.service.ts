@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal, WritableSignal, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -9,12 +9,13 @@ import { TranslationService } from './translation.service';
   providedIn: 'root'
 })
 export class LanguageService {
-  private _language: string = environment.lang;
-  private _languages: Language[] = [];
   private readonly api: string = `${environment.api}/Languages`;
+  private readonly languages: WritableSignal<Language[]> = signal<Language[]>([]);
+  public readonly $languages: Signal<Language[]> = this.languages.asReadonly();
 
   constructor(
-    private readonly http: HttpClient
+    private readonly http: HttpClient,
+    private readonly translationService: TranslationService
   ) {}
 
   // PUBLIC METHODS
@@ -26,21 +27,14 @@ export class LanguageService {
     );
   }
 
-  get language(): string {
-    return this._language;
-  }
-
-  set language(
-    language: string
-  ) {
-    this._language = language;
-  }
-
   // PRIVATE METHODS
 
   private handleSuccess(
     languages: Language[]
   ): void {
-    this._languages = languages;
+    languages.forEach((language: Language) => {
+      language.displayName = this.translationService.getDisplayName(language.name);
+    });
+    this.languages.set(languages);
   }
 }
