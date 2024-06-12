@@ -1,5 +1,6 @@
 table {
     border-collapse: collapse;
+    display: block;
     font-size: inherit;
     overflow-x: auto;
     width: 100%;
@@ -19,4 +20,16 @@ td {
     font-size: initial;
     padding: 5px 10px;
     white-space: nowrap;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.data-center {
+    text-align: center;
+}
+
+.data-right {
+    text-align: right;
 }

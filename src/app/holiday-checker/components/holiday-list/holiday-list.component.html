@@ -6,17 +6,19 @@
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th class="full-width">Name</th>
+                    <th class="data-center">Nationwide</th>
+                    <th class="data-right">Start Date</th>
+                    <th class="data-right">End Date</th>
                 </tr>
             </thead>
             <tbody>
                 @for (holiday of holidays.list(); track holiday.id) {
                     <tr>
-                        <td>{{ holiday.displayName }}</td>
-                        <td>{{ holiday.startDate }}</td>
-                        <td>{{ holiday.endDate }}</td>
+                        <td class="full-width">{{ holiday.displayName }}</td>
+                        <td class="data-center">{{ holiday.nationwide ? 'yes' : 'no' }}</td>
+                        <td class="data-right">{{ holiday.startDate }}</td>
+                        <td class="data-right">{{ holiday.endDate }}</td>
                     </tr>
                 }
             </tbody>
