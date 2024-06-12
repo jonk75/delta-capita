@@ -10,5 +10,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 })
 
 export class ErrorComponent {
-  @Input() public errors: string[] = [];
+  @Input() public errors: undefined | string[] = [];
 }

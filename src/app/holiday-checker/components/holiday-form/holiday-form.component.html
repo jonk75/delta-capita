@@ -12,6 +12,7 @@
                             <option [value]="country.isoCode">{{ country.displayName }}</option>
                         }
                     </select>
+                    <app-error [errors]="formErrors['countryIsoCode']"></app-error>
                 </div>
             }
         </div>
@@ -28,6 +29,7 @@
                         <option [value]="subvivision.code">{{ subvivision.displayName }}</option>
                     }
                 </select>
+                <app-error [errors]="formErrors['subdivision']"></app-error>
             </div>
         }
     }
@@ -36,16 +38,15 @@
             <div class="form-control form-required">
                 <label for="validFrom">From</label>
                 <input type="date" formControlName="validFrom" id="validFrom" [min]="minDate" />
-                <pre>{{ formGroup.controls['validFrom'].errors | json }}</pre>
+                <app-error [errors]="formErrors['validFrom']"></app-error>
             </div>
             <div class="form-control form-required">
                 <label for="validTo">To</label>
                 <input type="date" formControlName="validTo" id="validTo" [min]="formGroup.value['validFrom'] || minDate" />
-                <pre>{{ formGroup.controls['validFrom'].errors | json }}</pre>
+                <app-error [errors]="formErrors['validTo']"></app-error>
             </div>
         </div>
     }
-    <app-error [errors]="countries.errors() || subdivisions.errors()"></app-error>
-    <pre>{{ formGroup.errors | json }}</pre>
+    <app-error [errors]="countries.errors() || subdivisions.errors() || formErrors['form']"></app-error>
     <button type="button" class="cc-button" (click)="submit()" [disabled]="formGroup.invalid">Retrieve Holidays</button>
 </form>

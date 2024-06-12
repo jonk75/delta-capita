@@ -11,7 +11,7 @@ export class HolidayValidators {
         const controlDate: Date = new Date(control.value);
         if (controlDate.toString().toLowerCase() === 'invalid date') {
           return {
-            invalidDate: true
+            invalid: true
           } 
         }
         const controlTimestamp: number = controlDate.getTime()
@@ -37,7 +37,7 @@ export class HolidayValidators {
           const toDate: number = new Date(controlTo.value).getTime();
           if (toDate < fromDate) {
             return {
-              outOfRange: true
+              datesOutOfRange: true
             }
           }
           const years: number = Number(((toDate - fromDate) / 31536000000).toFixed(0));

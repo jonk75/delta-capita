@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Countries, CountryService } from '../../services/country.service';
 import { HolidayService } from '../../services/holiday.service';
@@ -8,6 +8,11 @@ import { HolidayFormValue } from '../../models/holiday-form-value';
 import { LoaderComponent } from '../../../components/loader/loader.component';
 import { HolidayValidators } from '../../validators/holiday.validators';
 import { CommonModule } from '@angular/common';
+import { FormValidationService } from '../../../services/form-validation.service';
+import { Subscription } from 'rxjs';
+import { FormChanges } from '../../../models/form-changes.model';
+import { FormValidationErrors } from '../../../models/form-validation-errors.model';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-holiday-form',
@@ -23,7 +28,8 @@ import { CommonModule } from '@angular/common';
   encapsulation: ViewEncapsulation.None
 })
 
-export class HolidayFormComponent implements OnInit {
+export class HolidayFormComponent implements OnInit, OnDestroy {
+  private readonly subscriptions$: Subscription = new Subscription();
   public showDatePicker: boolean = false;
   public readonly minDate: string = '2020-01-01';
   public readonly countries: Countries = this.countryService.countries;
@@ -52,21 +58,28 @@ export class HolidayFormComponent implements OnInit {
     ]
   }, {
     validators: HolidayValidators.dateRange(
-      3,
+      environment.maxYears,
       'validFrom',
       'validTo'
     )
   });
+  public formErrors: FormValidationErrors = {};
 
   constructor(
     private readonly countryService: CountryService,
     private readonly formBuilder: FormBuilder,
+    private readonly formValidationService: FormValidationService,
     private readonly holidayService: HolidayService,
     private readonly subdivisionService: SubdivisionService
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
     this.countryService.getCountries();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions$.unsubscribe();
   }
 
   // PUBLIC METHODS
@@ -102,6 +115,18 @@ export class HolidayFormComponent implements OnInit {
       values.validFrom,
       values.validTo,
       values.subdivision
+    );
+  }
+
+  // PRIVATE METHODS
+
+  private initForm() {
+    this.subscriptions$.add(
+      this.formValidationService.onFormChanges(
+        this.formGroup
+      ).subscribe((changes: FormChanges) => {
+        this.formErrors = changes.errors;
+      })
     );
   }
 
