@@ -16,9 +16,9 @@ export interface Subdivisions {
   providedIn: 'root'
 })
 export class SubdivisionService {
-  private api: string = `${environment.api}/Subdivisions`;
-  private readonly _lists: {[key: string]: Subdivision[];} = {};
   private _list: Subdivision[] = [];
+  private readonly api: string = `${environment.api}/Subdivisions`;
+  private readonly _lists: {[key: string]: Subdivision[];} = {};
   private readonly list: WritableSignal<Subdivision[]> = signal<Subdivision[]>(this._list);
   private readonly loading: WritableSignal<boolean> = signal<boolean>(false);
   private readonly errors: WritableSignal<string[]> = signal<string[]>([]);

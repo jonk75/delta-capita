@@ -17,8 +17,8 @@ export interface Countries {
 })
 
 export class CountryService {
-  private api: string = `${environment.api}/Countries`;
   private _list: Country[] = [];
+  private readonly api: string = `${environment.api}/Countries`;
   private readonly list: WritableSignal<Country[]> = signal<Country[]>(this._list);
   private readonly loading: WritableSignal<boolean> = signal<boolean>(false);
   private readonly errors: WritableSignal<string[]> = signal<string[]>([]);

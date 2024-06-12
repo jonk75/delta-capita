@@ -20,12 +20,12 @@ export interface Holidays {
 })
 
 export class HolidayService {
-  private api: string = `${environment.api}/PublicHolidays`;
   private _countryIsoCode: string = '';
   private _validFrom: string = '';
   private _validTo: string = '';
   private _subdivision: string = '';
   private _list: Holiday[] = [];
+  private readonly api: string = `${environment.api}/PublicHolidays`;
   private readonly list: WritableSignal<Holiday[]> = signal<Holiday[]>(this._list);
   private readonly loading: WritableSignal<boolean> = signal<boolean>(false);
   private readonly errors: WritableSignal<string[]> = signal<string[]>([]);
