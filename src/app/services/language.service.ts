@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 })
 export class LanguageService {
   private _language: string = environment.lang;
+  private readonly api: string = `${environment.api}/Languages`;
 
   // PUBLIc METHODS
 

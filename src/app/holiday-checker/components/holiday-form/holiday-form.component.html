@@ -14,7 +14,6 @@
                     </select>
                 </div>
             }
-            <app-error [errors]="countries.errors() || formGroup.controls['countryIsoCode'].errors"></app-error>
         </div>
     }
     @if (subdivisions.loading()) {
@@ -31,7 +30,22 @@
                 </select>
             </div>
         }
-        <app-error [errors]="subdivisions.errors() || formGroup.controls['subdivision'].errors"></app-error>
     }
+    @if (showDatePicker) {
+        <div class="form-control-group">
+            <div class="form-control form-required">
+                <label for="validFrom">From</label>
+                <input type="date" formControlName="validFrom" id="validFrom" [min]="minDate" />
+                <pre>{{ formGroup.controls['validFrom'].errors | json }}</pre>
+            </div>
+            <div class="form-control form-required">
+                <label for="validTo">To</label>
+                <input type="date" formControlName="validTo" id="validTo" [min]="formGroup.value['validFrom'] || minDate" />
+                <pre>{{ formGroup.controls['validFrom'].errors | json }}</pre>
+            </div>
+        </div>
+    }
+    <app-error [errors]="countries.errors() || subdivisions.errors()"></app-error>
+    <pre>{{ formGroup.errors | json }}</pre>
     <button type="button" class="cc-button" (click)="submit()" [disabled]="formGroup.invalid">Retrieve Holidays</button>
 </form>

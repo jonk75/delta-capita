@@ -84,8 +84,14 @@ export class HolidayService {
     this.loading.set(false);
   }
 
-  public resetHolidays(): void {
-    this.list.set([]);
+  public resetHolidays(
+    countryIsoCode: string
+  ): boolean {
+    if (this._countryIsoCode !== countryIsoCode) {
+      this.list.set([]);
+      return true;
+    }
+    return false;
   }
 
   // PRIVATE METHODS
