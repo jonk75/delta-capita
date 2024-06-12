@@ -6,6 +6,7 @@ form {
 
 select,
 button {
+    border: 2px solid $mono;
     border-radius: 5px;
     display: block;
     font-family: inherit;
@@ -23,7 +24,6 @@ select {
     background-position: calc(100% - 20px) calc(1em - 3px), calc(100% - 15px) calc(1em - 3px), calc(100% - 2.5em) 0.5em;
     background-repeat: no-repeat;
     background-size: 5px 5px, 5px 5px, 1px 1.5em;
-    border: 2px solid rgba($bodyColor, 0.25);
     margin-bottom: 10px;
     outline: none;
 }
@@ -32,4 +32,18 @@ label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
+}
+
+button {
+    background: $body;
+    color: $background;
+    cursor: pointer;
+    &:enabled {
+        border-color: $body;
+    }
+    &:disabled {
+        background: $monoLight;
+        color: $mono;
+        cursor: default;
+    }
 }
