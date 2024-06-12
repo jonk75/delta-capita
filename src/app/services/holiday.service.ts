@@ -72,6 +72,9 @@ export class HolidayService {
       .then(
         (response: Holiday[]) => this.handleSuccess(
           response,
+          countryIsoCode,
+          validFrom,
+          validTo,
           subdivision
         )
       )
@@ -110,8 +113,14 @@ export class HolidayService {
 
   private handleSuccess(
     response: Holiday[],
+    countryIsoCode: string,
+    validFrom: string,
+    validTo: string,
     subdivision?: string
   ): void {
+    this._countryIsoCode = countryIsoCode;
+    this._validFrom = validFrom;
+    this._validTo = validTo;
     this._list = response;
     this.setDisplayName();
     this.filterHolidays(subdivision);
