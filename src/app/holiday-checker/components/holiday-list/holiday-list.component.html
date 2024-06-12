@@ -1,5 +1,5 @@
 @if (holidays.loading()) {
-    <p>Loading</p>
+    <app-loader [loading]="holidays.loading()" />
 } @else {
     <app-error [errors]="holidays.errors()"></app-error>
     @if (holidays.list().length) {

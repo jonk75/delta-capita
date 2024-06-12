@@ -1,6 +1,6 @@
 <form [formGroup]="formGroup">
     @if (countries.loading()) {
-        <p>Loading</p>
+        <app-loader [loading]="countries.loading()" />
     } @else {
         <div class="form-group">
             @if (countries.list().length) {
@@ -18,7 +18,7 @@
         </div>
     }
     @if (subdivisions.loading()) {
-        <p>Loading</p>
+        <app-loader [loading]="subdivisions.loading()" />
     } @else {
         @if (subdivisions.list().length) {
             <div class="form-control form-required">

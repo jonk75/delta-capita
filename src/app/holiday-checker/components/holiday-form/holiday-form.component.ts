@@ -5,12 +5,14 @@ import { HolidayService } from '../../../services/holiday.service';
 import { SubdivisionService, Subdivisions } from '../../../services/subdivision.service';
 import { ErrorComponent } from '../../../components/error/error.component';
 import { HolidayFormValue } from '../../../models/holiday-form-value';
+import { LoaderComponent } from '../../../components/loader/loader.component';
 
 @Component({
   selector: 'app-holiday-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    LoaderComponent,
     ErrorComponent
   ],
   templateUrl: './holiday-form.component.html',

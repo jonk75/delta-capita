@@ -2,13 +2,15 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { HolidayService, Holidays } from '../../../services/holiday.service';
 import { CommonModule } from '@angular/common';
 import { ErrorComponent } from '../../../components/error/error.component';
+import { LoaderComponent } from '../../../components/loader/loader.component';
 
 @Component({
   selector: 'app-holiday-list',
   standalone: true,
   imports: [
     CommonModule,
-    ErrorComponent
+    ErrorComponent,
+    LoaderComponent
   ],
   templateUrl: './holiday-list.component.html',
   styleUrl: './holiday-list.component.scss',
