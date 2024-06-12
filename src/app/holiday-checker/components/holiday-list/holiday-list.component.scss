@@ -26,10 +26,15 @@ td {
     width: 100%;
 }
 
+.no-results,
 .data-center {
     text-align: center;
 }
 
 .data-right {
     text-align: right;
+}
+
+.no-results {
+    font-style: italic;
 }

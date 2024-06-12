@@ -2,26 +2,30 @@
     <app-loader [loading]="holidays.loading()" />
 } @else {
     <app-error [errors]="holidays.errors()"></app-error>
-    @if (holidays.list().length) {
-        <table>
-            <thead>
-                <tr>
-                    <th class="full-width">Name</th>
-                    <th class="data-center">Nationwide</th>
-                    <th class="data-right">Start Date</th>
-                    <th class="data-right">End Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (holiday of holidays.list(); track holiday.id) {
+    @if (holidays.loaded()) {
+        @if (!holidays.list().length) {
+            <p class="no-results">Sorry, no results found</p>
+        } @else {
+            <table>
+                <thead>
                     <tr>
-                        <td class="full-width">{{ holiday.displayName }}</td>
-                        <td class="data-center">{{ holiday.nationwide ? 'yes' : 'no' }}</td>
-                        <td class="data-right">{{ holiday.startDate }}</td>
-                        <td class="data-right">{{ holiday.endDate }}</td>
+                        <th class="full-width">Name</th>
+                        <th class="data-center">Nationwide</th>
+                        <th class="data-right">Start Date</th>
+                        <th class="data-right">End Date</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @for (holiday of holidays.list(); track holiday.id) {
+                        <tr>
+                            <td class="full-width">{{ holiday.displayName }}</td>
+                            <td class="data-center">{{ holiday.nationwide ? 'yes' : 'no' }}</td>
+                            <td class="data-right">{{ holiday.startDate }}</td>
+                            <td class="data-right">{{ holiday.endDate }}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
     }
 }

@@ -6,12 +6,12 @@ import { lastValueFrom } from 'rxjs';
 import { Holiday } from '../models/holiday.model';
 import { TranslationService } from './translation.service';
 import { ErrorService } from './error.service';
-import { Subdivide, Subdivision } from '../models/subdivision.model';
 import { LanguageService } from './language.service';
 
 export interface Holidays {
   errors: Signal<string[]>;
   list: Signal<Holiday[]>;
+  loaded: Signal<boolean>;
   loading: Signal<boolean>;
 }
 
@@ -27,18 +27,20 @@ export class HolidayService {
   private _list: Holiday[] = [];
   private readonly api: string = `${environment.api}/PublicHolidays`;
   private readonly list: WritableSignal<Holiday[]> = signal<Holiday[]>(this._list);
+  private readonly loaded: WritableSignal<boolean> = signal<boolean>(false);
   private readonly loading: WritableSignal<boolean> = signal<boolean>(false);
   private readonly errors: WritableSignal<string[]> = signal<string[]>([]);
   public readonly holidays: Holidays = {
     errors: this.errors.asReadonly(),
     list: this.list.asReadonly(),
+    loaded: this.loaded.asReadonly(),
     loading: this.loading.asReadonly()
   };
 
   constructor(
     private readonly errorService: ErrorService,
     private readonly http: HttpClient,
-    private languageService: LanguageService,
+    private readonly languageService: LanguageService,
     private readonly translationService: TranslationService
   ) { }
 
@@ -89,6 +91,7 @@ export class HolidayService {
   ): boolean {
     if (this._countryIsoCode !== countryIsoCode) {
       this.list.set([]);
+      this.loaded.set(false);
       return true;
     }
     return false;
@@ -134,6 +137,7 @@ export class HolidayService {
     this._list = response;
     this.setDisplayName();
     this.filterHolidays(subdivision);
+    this.loaded.set(true);
   }
 
   private setDisplayName(): void {
