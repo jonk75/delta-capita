@@ -53,6 +53,7 @@ export class HolidayFormComponent implements OnInit {
     event: Event
   ): Promise<void> {
     const target: HTMLSelectElement = event.target as HTMLSelectElement;
+    this.holidayService.resetHolidays();
     await this.subdivisionService.getSubdivisions(target.value);
     const control: AbstractControl = this.formGroup.controls['subdivision'];
     this.formGroup.patchValue({

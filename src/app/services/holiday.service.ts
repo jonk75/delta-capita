@@ -84,6 +84,10 @@ export class HolidayService {
     this.loading.set(false);
   }
 
+  public resetHolidays(): void {
+    this.list.set([]);
+  }
+
   // PRIVATE METHODS
 
   private filterHolidays(
