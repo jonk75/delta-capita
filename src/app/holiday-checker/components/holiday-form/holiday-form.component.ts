@@ -1,13 +1,12 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Countries, CountryService } from '../../../services/country.service';
-import { HolidayService } from '../../../services/holiday.service';
-import { SubdivisionService, Subdivisions } from '../../../services/subdivision.service';
+import { Countries, CountryService } from '../../services/country.service';
+import { HolidayService } from '../../services/holiday.service';
+import { SubdivisionService, Subdivisions } from '../../services/subdivision.service';
 import { ErrorComponent } from '../../../components/error/error.component';
-import { HolidayFormValue } from '../../../models/holiday-form-value';
+import { HolidayFormValue } from '../../models/holiday-form-value';
 import { LoaderComponent } from '../../../components/loader/loader.component';
-import { HolidayValidators } from '../../../validators/holiday.validators';
-import { Subscription } from 'rxjs';
+import { HolidayValidators } from '../../validators/holiday.validators';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -24,8 +23,7 @@ import { CommonModule } from '@angular/common';
   encapsulation: ViewEncapsulation.None
 })
 
-export class HolidayFormComponent implements OnInit, OnDestroy {
-  private readonly subscriptions$: Subscription = new Subscription();
+export class HolidayFormComponent implements OnInit {
   public showDatePicker: boolean = false;
   public readonly minDate: string = '2020-01-01';
   public readonly countries: Countries = this.countryService.countries;
@@ -68,12 +66,7 @@ export class HolidayFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.initForm();
     this.countryService.getCountries();
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions$.unsubscribe();
   }
 
   // PUBLIC METHODS
@@ -100,7 +93,6 @@ export class HolidayFormComponent implements OnInit, OnDestroy {
   }
 
   public async submit(): Promise<void> {
-    console.log(this.formGroup);
     if (this.formGroup.invalid) {
       return;
     }
@@ -110,16 +102,6 @@ export class HolidayFormComponent implements OnInit, OnDestroy {
       values.validFrom,
       values.validTo,
       values.subdivision
-    );
-  }
-
-  // PRIVATE METHODS
-
-  private initForm(): void {
-    this.subscriptions$.add(
-      this.formGroup.valueChanges.subscribe(changes => {
-        console.log(this.formGroup);
-      })
     );
   }
 

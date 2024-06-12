@@ -1,4 +1,4 @@
-import { Translation } from "./translation.model"
+import { Translation } from "../../models/translation.model"
 
 export interface Subdivide {
     code: string;

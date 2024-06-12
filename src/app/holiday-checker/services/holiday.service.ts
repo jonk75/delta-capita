@@ -1,12 +1,12 @@
 import { Injectable, Signal, WritableSignal, signal } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { lastValueFrom } from 'rxjs';
 import { Holiday } from '../models/holiday.model';
-import { TranslationService } from './translation.service';
-import { ErrorService } from './error.service';
-import { LanguageService } from './language.service';
+import { TranslationService } from '../../services/translation.service';
+import { ErrorService } from '../../services/error.service';
+import { LanguageService } from '../../services/language.service';
 
 export interface Holidays {
   errors: Signal<string[]>;

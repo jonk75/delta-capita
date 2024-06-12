@@ -20,8 +20,8 @@
                         <tr>
                             <td class="full-width">{{ holiday.displayName }}</td>
                             <td class="data-center">{{ holiday.nationwide ? 'yes' : 'no' }}</td>
-                            <td class="data-right">{{ holiday.startDate }}</td>
-                            <td class="data-right">{{ holiday.endDate }}</td>
+                            <td class="data-right">{{ holiday.startDate | date: 'dd/MM/yyyy' }}</td>
+                            <td class="data-right">{{ holiday.endDate | date: 'dd/MM/yyyy' }}</td>
                         </tr>
                     }
                 </tbody>

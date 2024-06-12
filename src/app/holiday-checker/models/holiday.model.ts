@@ -1,5 +1,5 @@
 import { Subdivide } from "./subdivision.model";
-import { Translation } from "./translation.model";
+import { Translation } from "../../models/translation.model";
 
 export interface Holiday {
     displayName: string;

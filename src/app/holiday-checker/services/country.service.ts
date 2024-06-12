@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, Signal, WritableSignal, signal } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Observable, lastValueFrom } from 'rxjs';
 import { Country } from '../models/country.model';
-import { TranslationService } from './translation.service';
-import { ErrorService } from './error.service';
+import { TranslationService } from '../../services/translation.service';
+import { ErrorService } from '../../services/error.service';
 
 export interface Countries {
   errors: Signal<string[]>;

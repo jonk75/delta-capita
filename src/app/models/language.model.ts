@@ -1,8 +1,7 @@
 import { Translation } from "./translation.model";
 
-export interface Country {
+export interface Language {
     displayName: string;
     isoCode: string;
     name: Translation[];
-    officialLanguages: string[];
 }

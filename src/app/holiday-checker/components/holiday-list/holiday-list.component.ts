@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { HolidayService, Holidays } from '../../../services/holiday.service';
-import { CommonModule } from '@angular/common';
+import { HolidayService, Holidays } from '../../services/holiday.service';
+import { DatePipe } from '@angular/common';
 import { ErrorComponent } from '../../../components/error/error.component';
 import { LoaderComponent } from '../../../components/loader/loader.component';
 
@@ -8,7 +8,7 @@ import { LoaderComponent } from '../../../components/loader/loader.component';
   selector: 'app-holiday-list',
   standalone: true,
   imports: [
-    CommonModule,
+    DatePipe,
     ErrorComponent,
     LoaderComponent
   ],
