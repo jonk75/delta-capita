@@ -92,16 +92,9 @@ export class HolidayFormComponent implements OnInit, OnDestroy {
     const hasChanged: boolean = this.holidayService.resetHolidays(countryIsoCode);
     this.showDatePicker = !hasChanged;
     await this.subdivisionService.getSubdivisions(countryIsoCode);
-    const control: AbstractControl = this.formGroup.controls['subdivision'];
     this.formGroup.patchValue({
       subdivision: ''
     });
-    if (this.subdivisions.list().length) {
-      control.setValidators([Validators.required]);
-    } else {
-      control.clearValidators();
-    }
-    control.updateValueAndValidity();
     this.showDatePicker = true;
   }
 
