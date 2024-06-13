@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 export class TranslationService {
   /**
    * Gets the display name for an item from language array options
-   * Finds the name matching the provided lang or the first item on the name array
+   * Finds the name matching the environment lang or the first item on the name array
    * @param {Translation[]} items 
    * @returns {string}
    */
