@@ -2,20 +2,18 @@
     @if (countries.loading()) {
         <app-loader [loading]="countries.loading()" />
     } @else {
-        <div class="form-group">
-            @if (countries.list().length) {
-                <div class="form-control form-required">
-                    <label for="countryIsoCode">Country</label>
-                    <select formControlName="countryIsoCode" id="countryIsoCode" (change)="setCountry($event)">
-                        <option value="">Select country</option>
-                        @for (country of countries.list(); track country.isoCode) {
-                            <option [value]="country.isoCode">{{ country.displayName }}</option>
-                        }
-                    </select>
-                    <app-error [errors]="formErrors['countryIsoCode']"></app-error>
-                </div>
-            }
-        </div>
+        @if (countries.list().length) {
+            <div class="form-control form-required">
+                <label for="countryIsoCode">Country</label>
+                <select formControlName="countryIsoCode" id="countryIsoCode" (change)="setCountry($event)">
+                    <option value="">Select country</option>
+                    @for (country of countries.list(); track country.isoCode) {
+                        <option [value]="country.isoCode">{{ country.displayName }}</option>
+                    }
+                </select>
+                <app-error [errors]="formErrors['countryIsoCode']"></app-error>
+            </div>
+        }
     }
     @if (subdivisions.loading()) {
         <app-loader [loading]="subdivisions.loading()" />
