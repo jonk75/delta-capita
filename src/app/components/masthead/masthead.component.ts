@@ -1,6 +1,4 @@
-import { Component, OnInit, Signal, ViewEncapsulation } from '@angular/core';
-import { LanguageService } from '../../services/language.service';
-import { Language } from '../../models/language.model';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-masthead',
@@ -11,14 +9,4 @@ import { Language } from '../../models/language.model';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MastheadComponent implements OnInit {
-  public readonly $languages: Signal<Language[]> = this.languageService.$languages;
-
-  constructor(
-    private readonly languageService: LanguageService
-  ) { }
-
-  ngOnInit(): void {
-    this.languageService.init();
-  }
-}
+export class MastheadComponent {}

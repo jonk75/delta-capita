@@ -42,13 +42,17 @@ export class FormValidationService {
 
   // PRIVATE METHODS
 
+  /**
+   * Gets errors for a form
+   * @param {FormGroup} group 
+   * @returns {FormValidationErrors}
+   */
   private getErrors(
     group: FormGroup
   ): FormValidationErrors {
     let formErrors: FormValidationErrors = {
       form: []
     };
-    console.log(group);
     for (const errorKey in group.errors) {
       if (errorKey) {
         formErrors['form'].push(
@@ -72,6 +76,11 @@ export class FormValidationService {
     return formErrors;
   }
 
+  /**
+   * Matches error by key and returns message
+   * @param {string} errorKey 
+   * @returns {string} Error message
+   */
   private getMessage(
     errorKey: string
   ): string {

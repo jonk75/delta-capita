@@ -35,6 +35,25 @@ export class LanguageService {
     languages.forEach((language: Language) => {
       language.displayName = this.translationService.getDisplayName(language.name);
     });
+    languages.sort(this.sortAlphabetic);
     this.languages.set(languages);
+  }
+
+  /**
+   * Sort language drop down by display name
+   * @param {Language} a
+   * @param {Language} b
+   */
+  private sortAlphabetic(
+    a: Language,
+    b: Language
+  ): number {
+    if (a.displayName < b.displayName) {
+      return -1;
+    }
+    if (a.displayName > b.displayName) {
+      return 1;
+    }
+    return 0;
   }
 }

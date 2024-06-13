@@ -6,7 +6,6 @@ import { lastValueFrom } from 'rxjs';
 import { Holiday } from '../models/holiday.model';
 import { TranslationService } from '../../services/translation.service';
 import { ErrorService } from '../../services/error.service';
-import { LanguageService } from '../../services/language.service';
 
 export interface Holidays {
   errors: Signal<string[]>;
@@ -40,7 +39,6 @@ export class HolidayService {
   constructor(
     private readonly errorService: ErrorService,
     private readonly http: HttpClient,
-    private readonly languageService: LanguageService,
     private readonly translationService: TranslationService
   ) { }
 
