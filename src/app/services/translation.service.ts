@@ -13,7 +13,7 @@ export class TranslationService {
    * @param {Translation[]} items 
    * @returns {string}
    */
-  getDisplayName(
+  public getDisplayName(
     items: Translation[]
   ): string {
     const item: Translation | undefined = items.find((name) => name.language === environment.lang);
